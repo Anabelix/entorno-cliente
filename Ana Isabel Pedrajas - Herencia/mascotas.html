@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@500&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Quicksand', sans-serif;
+        }
+        .contenedor {
+            width: 50%;
+            margin: 0 auto;
+        }
+        h1, p {margin-top: 2%;}
+        .texto {
+            display: flex;
+            flex-direction: column;
+        }
+        p {
+            background-color: rgb(255, 253, 222);
+            border-radius: 10px;
+            padding: 1%;
+            box-shadow: 0 0 5px 1px rgba(167, 159, 49, 0.5);
+        }
+    </style>
+    <title>Mascotas</title>
+</head>
+
+<body>
+    <div class="contenedor">
+        <h1>Mascotas</h1>
+        <div class="texto"></div>
+    </div>
+</body>
+
+<script>
+    let texto = document.querySelector('.texto');
+    
+    class Mascotas {
+        constructor (nombre, cantidad) {
+            this.nombre=nombre;
+            this.cantidad=cantidad;
+        }
+        getCantidad() {return this.cantidad;}
+        printeo () {
+            return `DATOS DE LA MASCOTA:
+            <br>Nombre: ${this.nombre}
+            <br>Cantidad de comida que consume: ${this.cantidad} gr/día.<br>`;
+        }
+    }
+
+    class MascotasComida extends Mascotas {
+        comida () { return `Una bolsa de comida de 3kg para ${this.nombre} durará ${3000/(this.cantidad)} días.`; } }
+
+    let mascotas = [];
+    mascotas.push(new MascotasComida ('Chonflus', 200));
+    mascotas.push(new MascotasComida ('Chonflus', 200));
+    mascotas.push(new MascotasComida ('Tara', 50));
+
+    for (const mascota in mascotas) {
+        if (Object.hasOwnProperty.call(mascotas, mascota)) {
+            texto.innerHTML+=`<p>${mascotas[mascota].printeo()} ${mascotas[mascota].comida()}</p>`;
+        }
+    }
+</script>
+</html>
