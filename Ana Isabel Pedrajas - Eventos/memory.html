@@ -48,26 +48,69 @@
         <div class="carta"></div>
     </div>
     <script>
-        let michi = new Image();
         const imagenes = [
+        'michi01.png',
+        'michi02.png',
+        'michi03.png',
+        'michi04.png',
+        'michi05.png',
         'michi01.png',
         'michi02.png',
         'michi03.png',
         'michi04.png',
         'michi05.png'
         ];
-        let pintadas = [];
+        let indice;
+        let comodin;
+        for (let i = (imagenes.length-1); i > 0; i--) {
+            indice=Math.floor(Math.random()*(i+1)); //5
+            comodin=imagenes[i]; //valor de imagenes[posicion final] 
+            imagenes[i]=imagenes[indice]; //valor de imagenes[posicion final]=imagenes[indice]  
+            imagenes[indice]=comodin; //imagenes[indice]=imagenes[posicion final]
+        }
+
+/*         console.log(imagenes);
+        for (const numeros of imagenes) {
+            console.log("Elemento del array: "+numeros+" id:"+numeros);
+        } */
+        let resultado = document.querySelector("h1");
+        let seleccion = [];
         let cont=0;
+        let i=0;
         let cartas = document.querySelectorAll(".carta");
-        cartas.forEach(carta => {
-            carta.addEventListener("click", function() {
-                let fondo;
-                fondo = imagenes[Math.floor(Math.random()*4)];
-                
-                carta.style.backgroundImage="url('"+fondo+"')";
-                carta.style.backgroundSize="cover";
+        cartas.forEach(element => {
+            element.addEventListener("click", function () {
+                seleccion.push(pintar(this));
+                console.log(seleccion);
+                if (seleccion.length == 2) { 
+                    comprobar(seleccion[0], seleccion[1]);
+                }
             })
         });
+
+        function pintar (carta) {
+            for (let i = 0; i < imagenes.length; i++) {
+                console.log(imagenes[i]);
+                carta.style.backgroundImage="url('"+imagenes[i]+"')";
+                carta.style.backgroundSize="cover";
+                carta.setAttribute("id", imagenes[i]);
+            }
+            
+            i++;
+
+            return carta.id;
+        }
+
+        function comprobar (c1, c2) {
+            if (c1==c2) {
+                cont++;
+                console.log(c1+" y "+c2+" coinciden");
+                resultado.innerHTML=cont;
+            } else {
+                console.log(c1+" y "+c2+" no coinciden :(");
+                seleccion=[];
+            }
+        }
 
 
     </script>
