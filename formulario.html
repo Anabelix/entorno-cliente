@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div class="formulario">
+        <form action="">
+            <label for="nombre">Nombre:</label>
+            <input type="text" name="nombre" id="nombre">
+            <label for="color">Color:</label><br>
+            Rojo: <input type="radio" name="color" id="rojo" value="rojo"><br>
+            Verde: <input type="radio" name="color" id="verde" value="verde"><br>
+            Azul: <input type="radio" name="color" id="azul" value="azul"><br>
+            <input type="button" value="Enviar" onclick="enviar()">
+        </form>    
+    </div>
+    
+    <script>
+        function enviar () {
+            let formulario = document.querySelector(".formulario");
+            let sele = document.querySelector('input[name="color"]:checked').value;
+            console.log(sele);
+            switch (sele) {
+                case "rojo": color="red"; break;
+                case "verde": color="green"; break;
+                case "azul": color="blue"; break;
+            }
+
+            formulario.style.backgroundColor=color;
+        }
+    </script>
+</body>
+</html>
