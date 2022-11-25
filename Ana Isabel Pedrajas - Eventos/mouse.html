@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        .contenedor {
+            width: 60%;
+        }
+        .resultados {
+            width: 100%;
+            height: 20%;
+            background-color: rgb(230, 215, 196);
+        }
+    </style>
+    <title>Mouse</title>
+</head>
+<body>
+    <div class="contenedor">
+        <div class="resultados"></div>
+        <div class="resultados"></div>
+    </div>
+
+    <script>
+        let resultados = document.querySelectorAll(".resultados");
+
+        window.addEventListener("mousemove", function (e){
+            resultados[0].innerHTML = `<h1>Posición del ratón con respecto al cliente:</h1>
+                                    Posición X: ${e.clientX} <br>
+                                    Posición Y: ${e.clientY}`;
+            resultados[1].innerHTML = `<h1>Posición del ratón con respecto al navegador:</h1>
+                                    Posición Xr: ${e.screenX} <br>
+                                    Posición Yr: ${e.screenY}`;
+            console.log(e);
+        });
+    </script>
+</body>
+</html>

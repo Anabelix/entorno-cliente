@@ -4,6 +4,9 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@100;400;900&display=swap" rel="stylesheet">
     <style>
         * {
             margin: 0;
@@ -13,9 +16,14 @@
         body, html {
             width: 100%;
             height: 100%;
+            background-color: #000;
         }
         h1 {
+            margin:2% 0;
             text-align: center;
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 400;
+            color: #FFF;
         }
 
         .cartas {
@@ -26,22 +34,20 @@
             height: 50%;
             gap:5% 2%;
             justify-content: center;
+            
         }
         .carta {
-            border:1px solid;
             backface-visibility: hidden;
             -webkit-backface-visibility: hidden;
+            border-radius: 5%;
+            filter: grayscale(1);
         }
 
-        .img {
-            backface-visibility: hidden;
-            -webkit-backface-visibility: hidden;
-        }
     </style>
     <title>Memory Game</title>
 </head>
 <body>
-    <h1>0</h1>
+    <h1>Aciertos: 0</h1>
     <div class="cartas">
         <div class="carta"></div>
         <div class="carta"></div>
@@ -71,33 +77,16 @@
         let seleccion = [];
         let cont=0;
         let i=0;
-        
-        let cartitas = document.querySelector(".cartas");
-        
-/*         for (let i = 0; i < imagenes.length; i++) {
-            cartuka=document.createElement('div');
-            cartuka.classList.add(imagenes[i]);
 
-            trasera=document.createElement('div');
-            trasera.classList.add("carta");
-
-            cartuka.appendChild(trasera);
-            cartitas.appendChild(cartuka);
-            
-            
-        } */
         let cartas = document.querySelectorAll(".carta");
-        //Pintarlas
         
         for (const carta of cartas) {
             carta.classList.add(imagenes[i]);
             carta.style.backgroundImage="url('"+imagenes[i]+".png')";
             carta.style.backgroundSize="cover";
-            carta.style.boxShadow="0px 0px 100px 100px inset green";
+            carta.style.boxShadow="0px 0px 100px 100px inset #E61F8E";
             i++;
         }
-        
-
         
         activarEvento();
         
@@ -106,8 +95,10 @@
             seleccion.push(this);
             console.log(seleccion);
 
-            //this.removeEventListener("click", seleccionar); Eliminas el evento en la carta seleccionada actualmente
-            if (seleccion.length==2) { (comprobar(seleccion[0], seleccion[1]))?desactivarEvento():"";}
+            setTimeout(function comprobacion() {
+                if (seleccion.length==2) { (comprobar(seleccion[0], seleccion[1]))?desactivarEvento():"";}
+            },1000);
+            
         }
 
         function activarEvento() {
@@ -128,14 +119,21 @@
                 cont++;
                 console.log(c1+" y "+c2+" coinciden");
                 c1.style.boxShadow=null;
+                c1.style.border="10px solid #31C922";
+                c1.style.filter = "drop-shadow(0 0 0.4rem #31C922)";
                 c2.style.boxShadow=null;
-                resultado.innerHTML=cont;
+                c2.style.border="10px solid #31C922";
+                c2.style.filter = "drop-shadow(0 0 0.4rem #31C922)";
+                resultado.innerHTML="Aciertos: "+cont;
+                if (cont==5) {
+                    resultado.innerHTML="¡Has ganado! 🙌";
+                }
                 return true;
 
             } else {
                 console.log(c1+" y "+c2+" no coinciden :(");
-                /* c1.style.boxShadow="0px 0px 100px 100px inset green";
-                c2.style.boxShadow="0px 0px 100px 100px inset green"; */
+                c1.style.boxShadow="0px 0px 100px 100px inset #E61F8E";
+                c2.style.boxShadow="0px 0px 100px 100px inset #E61F8E";
                 seleccion=[];
                 return false;
             }
