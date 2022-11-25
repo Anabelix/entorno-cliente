@@ -29,6 +29,13 @@
         }
         .carta {
             border:1px solid;
+            backface-visibility: hidden;
+            -webkit-backface-visibility: hidden;
+        }
+
+        .img {
+            backface-visibility: hidden;
+            -webkit-backface-visibility: hidden;
         }
     </style>
     <title>Memory Game</title>
@@ -48,20 +55,11 @@
         <div class="carta"></div>
     </div>
     <script>
-        const imagenes = [
-        'michi01.png',
-        'michi02.png',
-        'michi03.png',
-        'michi04.png',
-        'michi05.png',
-        'michi01.png',
-        'michi02.png',
-        'michi03.png',
-        'michi04.png',
-        'michi05.png'
-        ];
+        const imagenes = [ 'michi01', 'michi02', 'michi03', 'michi04', 'michi05', 'michi01', 'michi02', 'michi03', 'michi04', 'michi05'];
         let indice;
         let comodin;
+
+        //Ponerlas de forma aleatoria
         for (let i = (imagenes.length-1); i > 0; i--) {
             indice=Math.floor(Math.random()*(i+1)); //5
             comodin=imagenes[i]; //valor de imagenes[posicion final] 
@@ -69,49 +67,79 @@
             imagenes[indice]=comodin; //imagenes[indice]=imagenes[posicion final]
         }
 
-/*         console.log(imagenes);
-        for (const numeros of imagenes) {
-            console.log("Elemento del array: "+numeros+" id:"+numeros);
-        } */
         let resultado = document.querySelector("h1");
         let seleccion = [];
         let cont=0;
         let i=0;
-        let cartas = document.querySelectorAll(".carta");
-        cartas.forEach(element => {
-            element.addEventListener("click", function () {
-                seleccion.push(pintar(this));
-                console.log(seleccion);
-                if (seleccion.length == 2) { 
-                    comprobar(seleccion[0], seleccion[1]);
-                }
-            })
-        });
+        
+        let cartitas = document.querySelector(".cartas");
+        
+/*         for (let i = 0; i < imagenes.length; i++) {
+            cartuka=document.createElement('div');
+            cartuka.classList.add(imagenes[i]);
 
-        function pintar (carta) {
-            for (let i = 0; i < imagenes.length; i++) {
-                console.log(imagenes[i]);
-                carta.style.backgroundImage="url('"+imagenes[i]+"')";
-                carta.style.backgroundSize="cover";
-                carta.setAttribute("id", imagenes[i]);
-            }
+            trasera=document.createElement('div');
+            trasera.classList.add("carta");
+
+            cartuka.appendChild(trasera);
+            cartitas.appendChild(cartuka);
             
+            
+        } */
+        let cartas = document.querySelectorAll(".carta");
+        //Pintarlas
+        
+        for (const carta of cartas) {
+            carta.classList.add(imagenes[i]);
+            carta.style.backgroundImage="url('"+imagenes[i]+".png')";
+            carta.style.backgroundSize="cover";
+            carta.style.boxShadow="0px 0px 100px 100px inset green";
             i++;
+        }
+        
 
-            return carta.id;
+        
+        activarEvento();
+        
+        function seleccionar (e) {
+            this.style.boxShadow=null;
+            seleccion.push(this);
+            console.log(seleccion);
+
+            //this.removeEventListener("click", seleccionar); Eliminas el evento en la carta seleccionada actualmente
+            if (seleccion.length==2) { (comprobar(seleccion[0], seleccion[1]))?desactivarEvento():"";}
+        }
+
+        function activarEvento() {
+            for (const carta of cartas) {
+                carta.addEventListener("click", seleccionar);
+            }
+        }
+
+         function desactivarEvento() {
+            for (const c of seleccion) {
+                c.removeEventListener("click", seleccionar);
+            }
+            seleccion=[];
         }
 
         function comprobar (c1, c2) {
-            if (c1==c2) {
+            if (c1.classList[1]==c2.classList[1]) {
                 cont++;
                 console.log(c1+" y "+c2+" coinciden");
+                c1.style.boxShadow=null;
+                c2.style.boxShadow=null;
                 resultado.innerHTML=cont;
+                return true;
+
             } else {
                 console.log(c1+" y "+c2+" no coinciden :(");
+                /* c1.style.boxShadow="0px 0px 100px 100px inset green";
+                c2.style.boxShadow="0px 0px 100px 100px inset green"; */
                 seleccion=[];
+                return false;
             }
         }
-
 
     </script>
 </body>

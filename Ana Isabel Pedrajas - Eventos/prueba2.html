@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Juego de cartas</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        .event-wrapper {
+            width: fit-content;
+            margin: 60px auto;
+            display: grid;
+            grid-template-columns: repeat(5, minmax(200px, 1fr));
+            gap: 40px 50px;
+        }
+
+        .card {
+            height: 240px;
+            width: 180px;
+            cursor: pointer;
+            color: white;
+            font-size: 24px;
+            text-align: center;
+            line-height: 240px;
+            user-select: none;
+            backface-visibility: hidden;
+            -webkit-backface-visibility: hidden;
+            background-color: red;
+            background-size: contain;
+            background-repeat: space;
+            background-position: center;
+            transform-style: preserve-3d;
+            transition: transform .5s ease;
+        }
+
+        .front {
+            transform: rotateY(180deg);
+            height: 100%;
+            width: 100%;
+            background: blue;
+            backface-visibility: hidden;
+            -webkit-backface-visibility: hidden;
+            cursor: auto;
+        }
+
+        .flip {
+            transform: rotateY(180deg);
+        }
+    </style>
+</head>
+<body>
+    <div class="wrapper event-wrapper"></div>
+
+    <script>
+        const eventDiv = document.querySelector('.event-wrapper');
+        let options = [1, 2, 3, 4, 5, 1, 2, 3, 4, 5];
+        let pair = [];
+        let cardSelected = [];
+        let contador = 0;
+        options.sort(() => (Math.random() > .5) ? 1 : -1);
+        
+        for (let i = 0; i < options.length; i++) {
+            card = document.createElement('div');
+            card.classList.add('card');
+
+            front = document.createElement('div');
+            front.classList.add('front');
+            front.innerHTML = options[i];
+
+            card.appendChild(front);
+            eventDiv.appendChild(card);
+        }
+        
+        let cards = Array.from(document.querySelectorAll('.card'));
+        activeEvent();
+
+        function selecction(event) {
+            this.classList.add('flip');
+            pair.push(this);
+            
+            this.removeEventListener('click', selecction);
+            
+            if (pair.length == 2) {
+                removeEvent();
+                if (pair[0].textContent === pair[1].textContent) {
+                    contador++;
+                    cardSelected.push(...pair);
+
+                    // devuelve la diferencia de los arrays, si quitamos la "!" devuelve lo que tengan en
+                    cards = cards.filter(x => !cardSelected.includes(x));
+
+                    pair = [];
+                } else {
+                    setTimeout(() => {
+                        pair[0].classList.remove('flip');
+                        pair[1].classList.remove('flip');
+                        pair = [];
+                    }, 1000);
+                }
+                setTimeout(() => {
+                    activeEvent()
+                }, 1000);
+            }
+        }
+
+        function activeEvent() {
+            for (const card of cards) {
+                card.addEventListener('click', selecction);
+            }
+        }
+        
+        function removeEvent() {
+            for (const card of cards) {
+                card.removeEventListener('click', selecction);
+            }    
+        }
+
+    </script>
+</body>
+</html>
