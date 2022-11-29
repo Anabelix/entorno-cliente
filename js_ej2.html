@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/js_ej2.css" type="text/css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Azeret+Mono:wght@500&family=Jost&display=swap" rel="stylesheet">
+    <script src="js/js_ej2.js" defer></script>
+    <title>Ejercicios II</title>
+</head>
+<body>
+    <div id="contenido">
+        <h1>EJERCICIOS JAVASCRIPT (II)</h1>
+            <div class="ej">
+                <h2>EJERCICIO 1</h2>
+                <div>
+                    <label>Convetir a Celsius: 
+                        <input type="radio" id="celsius" name="conversion" value="cel" checked>
+                    </label>
+                    <label>Convertir a Fahrenheit: 
+                        <input type="radio" id="fahrenheit" name="conversion" value="fah">
+                    </label><br><br>
+                    <label>
+                        Valor inicial: <input type="number" id="valorInicial">
+                    </label>
+                    <label>
+                        Valor final: <input type="number" id="valorFinal">
+                    </label>
+                </div>
+                <button class="boton" onclick="conversiones()">Convertir</button>
+
+                <table class="tabla"></table>
+            </div>
+            <div class="ej">
+                <h2>EJERCICIO 2</h2>
+                <div>
+                    <label>¿Cuanto dinero quieres convertir?
+                        <input type="number" id="cantidad" min="0" max="1000" value="0">
+                    </label><br><br>    
+                    <span>¿Cuál es la divisa de partida?
+                        <select name="origen" id="origenSelect">
+                            <option value="euro" selected>Euro</option>
+                            <option value="dolar">Dolar</option>
+                            <option value="libra">Libra</option>
+                            <option value="yen">Yen</option>
+                        </select>
+                    </span>
+                    <span>¿Y a la que deseas convertir?
+                        <select name="destino" id="destinoSelect">
+                            <option value="euro">Euro</option>
+                            <option value="dolar" selected>Dolar</option>
+                            <option value="libra">Libra</option>
+                            <option value="yen">Yen</option>
+                        </select>
+                    </span>
+                </div>
+                    
+                <button class="boton" onclick="divisas()">Convertir</button>
+                <div id="resultado"></div>
+            </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/js_ej2.css" type="text/css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Azeret+Mono:wght@500&family=Jost&display=swap" rel="stylesheet">
+    <script src="js/js_ej1.js" defer></script>
+    <title>Ejercicios I</title>
+</head>
+<body>
+    <div id="contenido">
+        <h1>EJERCICIOS JAVASCRIPT (I)</h1>
+        <div class="ej">
+            <h2>EJERCICIO 1</h2>
+            <div>
+                <p>Pedir tres números y mostrarlos ordenados de mayor a menor.</p>
+                <label for="num1">Intro num 1:
+                    <input type="number" id="num1">
+                </label>
+                <label for="num2">Intro num 2:
+                    <input type="number" id="num2">
+                </label>
+                <label for="num3">Intro num 3:
+                    <input type="number" id="num3">
+                </label>
+            </div>
+
+            <div class="resultado" id="apartado1"></div>
+            <button class="boton" id="bt1">Ordenar</button>
+        </div>
+
+
+        <div class="ej">
+            <h2>EJERCICIO 2</h2>
+            <div>
+                <p>Pedir un numero entre 0 y 9999 y mostrar cuantas cifras tiene.</p>
+                <label for="numero">Intro numero entre 0 y 9999
+                    <input type="number" min="0" max="9999" id="numero">
+                </label>
+            </div>
+
+            <div class="resultado" id="apartado2"></div>
+            <button class="boton" onclick="cifras()">Ordenar</button>
+        </div>
+
+
+        <div class="ej">
+            <h2>EJERCICIO 3</h2>
+            <div>
+                <p>Pedir un número entre 0 y 9999 y mostrarlo con las cifras al revés.</p>
+                <label for="numero2">Intro numero entre 0 y 9999
+                    <input type="number" min="0" max="9999" id="numero2">
+                </label>
+            </div>
+            
+            <div class="resultado" id="apartado3"></div>
+            <button class="boton" onclick="alReves()">Resultado</button>
+        </div>
+
+        <div class="ej">
+            <h2>EJERCICIO 4</h2>
+            <div>
+                <p>Pedir un número entre 0 y 9999 y decir si es capicúa.</p>
+
+                <label for="numero2">Intro numero entre 0 y 9999
+                    <input type="number" min="0" max="9999" id="numero3">
+                </label>
+            </div>
+
+
+            <div class="resultado" id="apartado4"></div>
+            <button class="boton" onclick="capicua()">Resultado</button>
+        </div>
+        
+    </div>
+</body>
+</html>

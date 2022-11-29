@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="funciones.css">
+    <script src="funciones.js" defer></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Gochi+Hand&family=IBM+Plex+Mono:wght@400;500&family=Source+Sans+Pro:wght@400;600;700&display=swap" rel="stylesheet">
+    <title>Funciones</title>
+</head>
+<body>
+    <div class="contenedor">
+        <h1>FUNCIONES CON JAVASCRIPT</h1>
+        <div class="ej">
+            <h2>FUNCIÓN PERÍMETRO</h2>
+            <div class="resul" id="resulEj1"><table id="perimetros"></table></div>
+        </div>
+        
+        <div class="ej">
+            <h2>FUNCIÓN LISTADO ALUMNOS</h2>
+            <label>Intro el numero de alumnos (max 20, min 8): <input type="number" name="alumnos" id="numAlumnos" max="20" min="8"></label>
+            <input type="button" class="boton" value="Enviar" onclick="listadoNotas()">
+            <div class="resul">
+                <div class="formulario"></div>
+                <table id="alumnos"></table>
+            </div>
+        </div>
+
+        <div class="ej">
+            <h2>FUNCIÓN INCLUDES</h2>
+            <div class="resul" id="resulEj3"></div>
+        </div>
+
+        <div class="ej">
+            <h2>FUNCIÓN CALCULAR DÍAS</h2>
+            <label>Intro la fecha: <input type="date" name="fecha" id="fechaHoy"></label>
+            <input type="button" class="boton" value="Enviar" onclick="calcularFechas()">
+            <div class="resul" id="resulEj4"></div>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="objetos_nativos.js" defer></script>
+    <link rel="stylesheet" href="objetos_nativos.css">
+    <title>Fechas</title>
+</head>
+<body>
+    <div class="contenido">
+        <h1>Objetos nativos en JavaScript</h1>
+        <div class="ej">
+            <h2>Manejo de fechas</h2>
+            <label> Selecciona el formato en el que deseas visualizar la hora actual:<br>
+                <input type="button" value="Hora detallada" onclick="hora('detallada')">
+                <input type="button" value="Hora PM/AM" onclick="hora('am/pm')">
+            </label>
+            <div class="resul" id="ej1"></div>
+        </div>    
+        <div class="ej">
+            <h2>Remix objetos</h2>
+            <p>Introduce los siguientes datos sobre tu pelicula fav.</p>
+            <input type="text" id="titulo" placeholder="Título">
+            <input type="text" id="director" placeholder="Director">
+            <input type="number" id="year" placeholder="Año de estreno">
+            <input type="button" value="Enviar" onclick="cadenas()">
+            <div class="resul" id="ej2"></div>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,36 @@
+* {
+    margin:0;
+    padding:0;
+    box-sizing: border-box;
+    font-family: 'Montserrat', sans-serif;
+}
+
+html, body {
+    width: 100%;
+}
+
+.contenedor {
+    width: 30%;
+    margin: 0 auto;
+    text-align: center;
+    margin-top: 2%;
+}
+h1 {font-family: 'Ubuntu', sans-serif;}
+.botones {
+    margin-top: 3%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+input {
+    background-color: rgb(212, 212, 212);
+    border: none;
+    border:3px solid rgb(149, 149, 149);
+    padding:1%;
+    border-radius: 10px;
+}
+
+input:hover {
+    background-color: #FFF;
+}
