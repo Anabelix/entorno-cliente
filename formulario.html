@@ -3,33 +3,138 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fuzzy+Bubbles:wght@400;700&family=Montserrat:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        * {
+            padding:0;
+            margin:0;
+            box-sizing: border-box;
+            font-family: 'Montserrat', sans-serif;
+        }
+        .formulario {
+            width: 60%;
+            margin: 0 auto;
+            padding:2%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+        form {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+        }
+
+        p {
+            padding:1%;
+            font-weight: 500;
+        }
+        input[type="checkbox"] {
+            margin-right: 2%;
+        }
+        input[type="button"] {
+            width: 10%;
+        }
+        #display_image{
+            background-position: center;
+            background-size: cover;
+        }
+        .resul, .resul>* {
+            font-weight: 400;
+            font-family: 'Fuzzy Bubbles', cursive;
+            color:rgb(36, 34, 38);
+        }
+        .resul {
+            margin-top: 2%;
+            background-color: antiquewhite;
+        }
+    </style>
     <title>Document</title>
 </head>
 <body>
     <div class="formulario">
         <form action="">
-            <label for="nombre">Nombre:</label>
-            <input type="text" name="nombre" id="nombre">
-            <label for="color">Color:</label><br>
-            Rojo: <input type="radio" name="color" id="rojo" value="rojo"><br>
-            Verde: <input type="radio" name="color" id="verde" value="verde"><br>
-            Azul: <input type="radio" name="color" id="azul" value="azul"><br>
+            <p> Nombre: <input type="text" name="nombre" id="nombre"></p>
+            <p> Apellidos: <input type="text" name="apellidos" id="apellidos"></p>
+
+            <p>Pasatiempos:<br>
+            Escuchar música <input type="checkbox" name="pasatiempos" id="musica" value="Escuchar musica">
+            Leer <input type="checkbox" name="pasatiempos" id="leer" value="Leer">
+            Hacer deporte <input type="checkbox" name="pasatiempos" id="deporte" value="Hacer deporte">
+            Ver series y películas <input type="checkbox" name="pasatiempos" id="cine" value="Ver series y películas">                
+            Videojuegos <input type="checkbox" name="pasatiempos" id="videojuegos" value="Videojuegos">                
+            Hacer manualidades <input type="checkbox" name="pasatiempos" id="manualidades" value="Hacer manualidades">         
+            </p>
+            <div class="colores">
+                <p>Escoge un color:<br>
+                Rojo: <input type="radio" name="color" id="rojo" value="rojo"><br>
+                Verde: <input type="radio" name="color" id="verde" value="verde"><br>
+                Azul: <input type="radio" name="color" id="azul" value="azul">
+                </p>
+            </div>
+
+            <p>Descríbete: <br><textarea name="descripcion" id="descripcion" cols="50" rows="10" placeholder="Escribe aquí una breve descripción sobre ti..."></textarea></p>
+
+            <p>Sube una foto tuya: <input type="file" name="foto" id="foto" accept=".png, .jpeg, .jpg"></p>
+            <div id="display_image"></div><br>
+
+            <input type="hidden" name="oculto" value="infoOculta">
             <input type="button" value="Enviar" onclick="enviar()">
-        </form>    
+
+        </form>
+        <div class="resul"></div>
     </div>
     
     <script>
-        function enviar () {
-            let formulario = document.querySelector(".formulario");
-            let sele = document.querySelector('input[name="color"]:checked').value;
-            console.log(sele);
-            switch (sele) {
-                case "rojo": color="red"; break;
-                case "verde": color="green"; break;
-                case "azul": color="blue"; break;
-            }
+        const foto = document.querySelector("#foto");
+        foto.addEventListener("change", function() {
+            const reader = new FileReader();
+            reader.addEventListener("load", () => {
+                const fotoCargada = reader.result;
+                    
+                document.querySelector("#display_image").style.backgroundImage = `url(${fotoCargada})`;
+                document.querySelector("#display_image").style.backgroundSize = "cover";
+                document.querySelector("#display_image").style.width = "150px";
+                document.querySelector("#display_image").style.height = "150px";
 
-            formulario.style.backgroundColor=color;
+            });
+            reader.readAsDataURL(this.files[0]);
+        });
+
+        function enviar () {
+            let resul = document.querySelector(".resul");
+            resul.style.padding="2%";
+            let nombre = document.querySelector("#nombre").value;
+            document.querySelector(".resul").innerHTML=`<p>Nombre: ${nombre}</p>`;
+            let apellidos = document.querySelector("#apellidos").value;
+            document.querySelector(".resul").innerHTML+=`<p>Apellidos: ${apellidos}</p>`;
+            
+            let pasatiempos = document.querySelectorAll('input[name="pasatiempos"]:checked');
+            document.querySelector(".resul").innerHTML+="&nbsp;Mis pasatiempos son:<br>"
+            for (const pasatiempo of pasatiempos) {
+                document.querySelector(".resul").innerHTML+=`&nbsp;✔ ${(pasatiempo.value)}<br>`;
+            }
+            
+            let descripcion = document.querySelector("#descripcion").value;
+            document.querySelector(".resul").innerHTML+=`<br><p>Breve descripción sobre mí: ${descripcion}</p>`;
+            
+            if (document.querySelector('input[type="radio"][name="color"]:checked')==null) {
+                alert("Selecciona un color");
+            } else {
+                let sele = document.querySelector('input[type="radio"][name="color"]:checked').value;
+                console.log(sele);
+                let labelColor = document.querySelector('.colores');
+                switch (sele) {
+                    case "rojo": color="red"; break;
+                    case "verde": color="green"; break;
+                    case "azul": color="blue"; break;
+                }
+                labelColor.style.backgroundColor=color;
+                document.querySelector(".resul").innerHTML+=`<p>Color seleccionado: ${sele}</p>`;
+            }
         }
     </script>
 </body>
