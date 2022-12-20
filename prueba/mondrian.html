@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="mondrian.css" type="text/css">
+    <script src="html2canvas.min.js" defer></script>
+    <title>Mondrian</title>
+</head>
+<body>
+    <div class="contenedor">
+        <div class="caja" id="cj1"><input type="color" class="color" id="0"></div>
+        <div class="caja" id="cj2"><input type="color" class="color" id="1"></div>
+        <div class="caja" id="cj3"><input type="color" class="color" id="2"></div>
+        <div id="cj4">
+            <div id="cj5">
+                <div class="caja" id="cj5_1"><input type="color" class="color" id="3"></div>
+                <div class="caja" id="cj5_2"><input type="color" class="color" id="4"></div>
+            </div>
+            <div id="cj6">
+                <div class="caja" id="cj6_1"><input type="color" class="color" id="5"></div>
+                <div class="caja" id="cj6_2"><input type="color" class="color" id="6"></div>
+            </div>
+        </div>
+        
+    </div>
+    <button id="download-page-as-image">Download Page as Image</button>
+    <script>         
+        let caja = document.querySelectorAll(".caja");
+        let color = document.querySelectorAll(".color");
+        color.forEach(element => {
+            element.addEventListener("input", function (){
+                caja[this.id].style.backgroundColor=`${element.value}`;
+            });
+        });
+    // html2canvas <- https://html2canvas.hertzen.com/dist/html2canvas.min.js
+
+    // code reference: https://stackoverflow.com/questions/31656689/how-to-save-img-to-users-local-computer-using-html2canvas
+
+    setUpDownloadPageAsImage();
+
+    function setUpDownloadPageAsImage() {
+    document.getElementById("download-page-as-image").addEventListener("click", function() {
+        html2canvas(document.body).then(function(canvas) {
+        console.log(canvas);
+        simulateDownloadImageClick(canvas.toDataURL(), 'file-name.png');
+        });
+    });
+    }
+
+    function simulateDownloadImageClick(uri, filename) {
+    var link = document.createElement('a');
+    if (typeof link.download !== 'string') {
+        window.open(uri);
+    } else {
+        link.href = uri;
+        link.download = filename;
+        accountForFirefox(clickLink, link);
+    }
+    }
+
+    function clickLink(link) {
+    link.click();
+    }
+
+    function accountForFirefox(click) { // wrapper function
+    let link = arguments[1];
+    document.body.appendChild(link);
+    click(link);
+    document.body.removeChild(link);
+    }
+    </script>
+</body>
+</html>

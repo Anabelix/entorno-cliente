@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta class="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        .caja {
+            width: 150px;
+            height: 150px;
+            border:0.2px solid black;
+            /* position: absolute; */
+        }
+        input {
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            appearance: none;
+            background-color: transparent;
+            border:none;
+            width: 50px;
+            height: 50px;
+        }
+        .contenedor {
+            display: flex;
+            flex-direction: column;
+        }
+    </style>
+    <title>Prueba</title>
+</head>
+<body>
+    <div class="contenedor">
+        <div class="caja" id="cj1"><input type="color" class="color" id="1"></div>
+        <div class="caja" id="cj2"><input type="color" class="color" id="2"></div>
+        <div class="caja" id="cj3"><input type="color" class="color" id="3"></div>
+        <div class="caja" id="cj4"><input type="color" class="color" id="4"></div>
+    </div>
+
+    
+    <script>         
+        let caja = document.querySelectorAll(".caja");
+/*         window.addEventListener("mousedown", function(e){
+            caja1.style.top=`${e.clientY-(caja1.offsetHeight/2)}px`;
+            caja1.style.left=`${e.clientX-(caja1.offsetWidth/2)}px`;
+        }) */
+
+        /* let color = document.querySelector("#color1"); */
+        let color = document.querySelectorAll(".color");
+        color.forEach(element => {
+            element.addEventListener("click", function () {
+                console.log(this.id);
+            });
+            element.addEventListener("input", function (){
+                caja[this.id-1].style.backgroundColor=`${element.value}`;
+        });
+            
+        });
+
+
+
+        
+
+        
+    </script>
+</body>
+</html>
