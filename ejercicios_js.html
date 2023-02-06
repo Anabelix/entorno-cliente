@@ -2,108 +2,91 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" type="text/css" href="css/estilos_ejercicios.css">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Gochi+Hand&family=IBM+Plex+Mono:wght@400;500&family=Source+Sans+Pro:wght@400;600;700&display=swap" rel="stylesheet">
-    <script src="js/js3.js" defer></script>
-    <title>Document</title>
+    <title>Indexed DB</title>
 </head>
 <body>
-    <div class="contenido">
-        <h1>EJERCICIOS JAVASCRIPT</h1>
-            <div class="ej">
-                <h2>EJERCICIO 1</h2>
-                <p>1. Confeccionar un programa que permita cargar el nombre de un usuario y su mail por teclado. Mostrar posteriormente los datos en la página HTML.</p>
+    <script>
+        var bd;
+        iniciar();
+        function iniciar () {
+            var request = indexedDB.open('mibasededatos', 1);
+            request.onsuccess = function(e){
+                bd = e.target.result;
+                console.log('Conexión establecida con éxito.');
+                //add();
+                //getArtista(bd, 'Stray Kids');
+            };
 
-                <div class="resultado">
-                    <div class="campos">
-                        <label for="nombre">Introduce tu nombre: 
-                            <input type="text" id="nombre">
-                        </label>
-                        <label for="email">Introduce tu email: 
-                            <input type="text" id="email">
-                        </label>
-                    </div>
-                    
-                    <div class="desplegable" id="texto"></div>
-                    <button class="boton" onclick="escribir()">Enviar</button>
-                </div>
-            </div>
+            request.onerror = function() {
+            console.error("Error al crear la base de datos.", request.error);
+            };
 
-            <div class="ej">
-                <h2>EJERCICIO 2</h2>
-                <p>2. Realizar la carga del radio de una circunferencia, mostrar por pantalla el área de este.</p>
+            request.onupgradeneeded = function(e){
+                console.log('El cliente no tiene la base de datos. Se inicializa.')
+                bd = e.target.result;
+                let playlist = bd.createObjectStore('playlist', {autoIncrement: true});
+                let index = playlist.createIndex('artista', 'artista')
+            };
+        }
 
-                <div class="resultado">
-                    <div class="campos">
-                        <label for="radio">Introduce el radio de la circunferencia: 
-                            <input type="number" id="radio">
-                        </label>
-                    </div>
-                    
-                    <div class="desplegable" id="area"></div>
-                    <button class="boton" onclick="calcularArea()">¡Calcular el área!</button>
-                </div>
-            </div>
+        //let deleteRequest = indexedDB.deleteDatabase('mibasededatos')
 
-            <div class="ej">
-                <h2>EJERCICIO 3</h2>
-                <p>3. Escribir un programa en el cual se ingresen las edades de 4 personas, calcular la suma del mayor y del menor junto al producto del tercero con el segundo.</p>
-            
-                <div class="resultado">
-                    <div class="campos">
-                        <label for="edad_uno">Intro 1ª edad.: <input type="text" id="edad_uno"></label>
-                        
-                        <label for="edad_dos">Intro 2ª edad: <input type="text" id="edad_dos"></label>
-                        
-                        <label for="edad_tres">Intro 3ª edad: <input type="text" id="edad_tres"></label>
-                        
-                        <label for="edad_cuatro">Intro 4ª edad: <input type="text" id="edad_cuatro"></label>
-                        
-                    </div>
-                    
-                    <div class="desplegable" id="edades"></div>
-                    <button class="boton" onclick="calcularEdad()">Resultado</button>
-                </div>
-            </div>
+        function add (cancion) {
+            //db.deleteObjectStore('playlist')
+            let playlist = bd.transaction('playlist', 'readwrite').objectStore('playlist');
 
-            <div class="ej">
-                <h2>EJERCICIO 4</h2>
-                <p>4. Solicitar por teclado ingresar los lados de un cuadrado y mostrar por pantalla el perímetro. Fórmula: lado x lado = perímetro².</p>
+            //Creamos una variable con los datos deseados.
+/*             let cancion = {
+                titulo: 'Moments',
+                artista: '1D',
+                duracion: 3,
+                creacion: new Date().getFullYear(),
+                agregado: new Date().getTime()
+            } */
 
-                <div class="resultado">
-                    <div class="campos">
-                        <label for="lado">Intro las medidas del lado:  
-                            <input type="number" id="lado">
-                        </label>
-                    </div>
+            //Creamos una petición que tendrá lugar al añadir el objeto creado anteriormente en nuestro almacén.
+            let request = playlist.add(cancion);
+            //Si la petición fue exitosa se ejecuta el evento onsuccess mostrandonos por consola la clave de nuestro nuevo objeto/elemento.
+            request.onsuccess = function() {
+                alert("Canción agregada a la playlist", request.result);
+            };
 
-                    <div class="desplegable" id="perimetro"></div>
-                    <button class="boton" onclick="calcularPerimetro()">Calcular el perímetro</button>
-                </div>
-            </div>
+            //Si la petición falló, se ejecuta el evento onerror mostrandonos por consola ese error. 
+            request.onerror = function() {
+                console.log("Error", request.error);
+            };
 
-            <div class="ej">
-                <h2>EJERCICIO 5</h2>
-                <p>5. Se debe desarrollar un programa que pida el ingreso del precio de un artículo y la cantidad que lleva el cliente. Mostrar lo que debe abonar el comprador (ingresar por teclado un precio sin decimales, es decir, un entero).</p>
+/*             request.oncomplete = function() {
+                alert("Transacción completa");
+            }; */
 
-                <div class="resultado">
-                    <div class="campos">
-                        <label for="precio">Introduce el precio del producto:  
-                            <input type="number" id="precio">
-                        </label>
-                        <label for="cantidad">Introduce la cantidad total:  
-                            <input type="number" id="cantidad">
-                        </label>
-                    </div>
-                    
-                    <div class="desplegable" id="cuenta"></div>
-                    <button class="boton" onclick="calcularCuenta()">Total a pagar</button>
 
-                </div>
-            </div>
-    </div>
+        }
+
+        function getArtista (bd, artista) {
+            //Se crea una transacción llamando a nuestro almacén de datos, esta vez de modo lectura.
+            const playlist = bd.transaction('playlist', 'readonly').objectStore('playlist');
+
+            //Creamos un index que no tiene por que ser único, nos servirá para hacer las búsquedas en nuestra base de datos.
+            const index = playlist.index('artista');
+
+            //Pasamos el index creado a la función de búsqueda 'getAll' y lo guardamos en la variable query.
+            let query = index.getAll(artista)
+
+            //Si la transacción ha sido exitosa, imprimiremos los resultados en formato de tabla.
+            query.onsuccess = (e) => {
+                console.table(query.result);
+            }
+        }
+
+        function getAll() {
+            let resultado = bd.transaction('playlist').objectStore('playlist').getAll();
+            resultado.onsuccess = (e) => {
+                console.table(resultado.result);
+            }
+        }
+    </script>
 </body>
 </html>
