@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Indexed DB</title>
+</head>
+<body>
+    <script>
+        var bd;
+        iniciar();
+        function iniciar () {
+            var request = indexedDB.open('mibasededatos', 1);
+            request.onsuccess = function(e){
+                bd = e.target.result;
+                console.log('Conexión establecida con éxito.'+request.result);
+                add();
+            };
+
+            request.onerror = function() {
+            console.error("Error al crear la base de datos.", request.error);
+            };
+
+            request.onupgradeneeded = function(e){
+                console.log('El cliente no tiene la base de datos. Se inicializa.')
+                bd = e.target.result;
+                bd.createObjectStore('playlist', {autoIncrement: true});
+            };
+        }
+
+        //let deleteRequest = indexedDB.deleteDatabase('mibasededatos')
+
+        function add () {
+            //db.deleteObjectStore('playlist')
+            let playlist = bd.transaction('playlist', 'readwrite').objectStore('playlist');
+
+            //Creamos una variable con los datos deseados.
+            let cancion = {
+                titulo: 'Emotions',
+                artista: '5SOS',
+                duracion: 3,
+                creacion: new Date('2022').getFullYear(),
+                agregado: new Date().getTime()
+            }
+
+            //Creamos una petición que tendrá lugar al añadir el objeto creado anteriormente en nuestro almacén.
+            let request = playlist.add(cancion);
+            console.log('añadido?')
+            //Si la petición fue exitosa se ejecuta el evento onsuccess mostrandonos por consola la clave de nuestro nuevo objeto/elemento.
+            request.onsuccess = function() {
+                alert("Canción agregada a la playlist", request.result);
+            };
+
+            //Si la petición falló, se ejecuta el evento onerror mostrandonos por consola ese error. 
+            request.onerror = function() {
+                console.log("Error", request.error);
+            };
+
+            request.oncomplete = function() {
+                console.log("Transacción completa");
+            };
+        }
+        
+    </script>
+</body>
+</html>
